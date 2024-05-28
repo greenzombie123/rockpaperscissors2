@@ -35,3 +35,6 @@ function checkComputerIsWinner(playerChoice, computerChoice) {
     else
         return false;
 }
+function incrementScore(score) {
+    return ++score;
+}

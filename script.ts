@@ -44,3 +44,8 @@ function checkComputerIsWinner(playerChoice: string, computerChoice: string): bo
 
     else return false
 }
+
+function incrementScore(score:number):number{
+    return ++score
+}
+
