@@ -10,16 +10,28 @@ function getComputerChoice() {
     return choices[index];
 }
 function checkWinner(playerChoice, computerChoice) {
-    if (playerChoice === "rock" && computerChoice === "scissors" ||
-        playerChoice === "scissors" && computerChoice === "paper" ||
-        playerChoice === "paper" && computerChoice === "rock") {
+    if (checkPlayerIsWinner(playerChoice, computerChoice)) {
         return "player";
     }
-    else if (playerChoice === "rock" && computerChoice === "paper" ||
-        playerChoice === "scissors" && computerChoice === "rock" ||
-        playerChoice === "paper" && computerChoice === "scissors") {
+    else if (checkComputerIsWinner(playerChoice, computerChoice)) {
         return "computer";
     }
     else
         return "draw";
+}
+function checkPlayerIsWinner(playerChoice, computerChoice) {
+    if (playerChoice === "rock" && computerChoice === "scissors" ||
+        playerChoice === "scissors" && computerChoice === "paper" ||
+        playerChoice === "paper" && computerChoice === "rock")
+        return true;
+    else
+        return false;
+}
+function checkComputerIsWinner(playerChoice, computerChoice) {
+    if (playerChoice === "rock" && computerChoice === "paper" ||
+        playerChoice === "scissors" && computerChoice === "rock" ||
+        playerChoice === "paper" && computerChoice === "scissors")
+        return true;
+    else
+        return false;
 }

@@ -15,17 +15,32 @@ function getComputerChoice(): string {
 }
 
 function checkWinner(playerChoice: string, computerChoice: string): string {
-    if (playerChoice === "rock" && computerChoice === "scissors" ||
-        playerChoice === "scissors" && computerChoice === "paper" ||
-        playerChoice === "paper" && computerChoice === "rock"
+    if (checkPlayerIsWinner(playerChoice, computerChoice)
     ) {
         return "player"
     }
-    else if (playerChoice === "rock" && computerChoice === "paper" ||
-    playerChoice === "scissors" && computerChoice === "rock" ||
-    playerChoice === "paper" && computerChoice === "scissors"){
+    else if (checkComputerIsWinner(playerChoice, computerChoice)) {
         return "computer"
     }
-    else 
+    else
         return "draw"
+}
+
+function checkPlayerIsWinner(playerChoice: string, computerChoice: string): boolean {
+    if (playerChoice === "rock" && computerChoice === "scissors" ||
+        playerChoice === "scissors" && computerChoice === "paper" ||
+        playerChoice === "paper" && computerChoice === "rock"
+    )
+        return true
+
+    else return false
+}
+
+function checkComputerIsWinner(playerChoice: string, computerChoice: string): boolean {
+    if (playerChoice === "rock" && computerChoice === "paper" ||
+        playerChoice === "scissors" && computerChoice === "rock" ||
+        playerChoice === "paper" && computerChoice === "scissors")
+        return true
+
+    else return false
 }
