@@ -3,6 +3,8 @@ var computerChoice;
 var playerScore = 0;
 var computerScore = 0;
 function playGame(choice) {
+    if (typeof choice !== "string") {
+    }
 }
 function getComputerChoice() {
     var choices = ["rock", "paper", "scissors"];
@@ -37,4 +39,10 @@ function checkComputerIsWinner(playerChoice, computerChoice) {
 }
 function incrementScore(score) {
     return ++score;
+}
+function checkIsCorrectInput(choice) {
+    if (typeof choice === "string" && (choice === "rock" || choice === "scissors" || choice === "paper"))
+        return true;
+    else
+        return false;
 }

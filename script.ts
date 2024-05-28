@@ -4,6 +4,9 @@ let playerScore = 0;
 let computerScore = 0;
 
 function playGame(choice: string) {
+    if (typeof choice !== "string") {
+
+    }
 }
 
 function getComputerChoice(): string {
@@ -45,7 +48,13 @@ function checkComputerIsWinner(playerChoice: string, computerChoice: string): bo
     else return false
 }
 
-function incrementScore(score:number):number{
+function incrementScore(score: number): number {
     return ++score
+}
+
+function checkIsCorrectInput(choice: string): boolean {
+    if (typeof choice === "string" && (choice === "rock" || choice === "scissors" || choice === "paper"))
+        return true
+    else return false
 }
 
