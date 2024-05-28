@@ -1,10 +1,10 @@
-let playerChoice;
-let computerChoice;
+let playerChoice: "rock"|"paper"|"scissors";
+let computerChoice:"rock"|"paper"|"scissors";
 
 function playGame(choice:string){
 }
 
-function getComputerChoice(){
+function getComputerChoice():string{
     const choices = ["rock", "paper", "scissors"];
 
     let index = Math.floor(Math.random() * 3)
