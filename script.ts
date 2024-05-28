@@ -4,9 +4,38 @@ let playerScore = 0;
 let computerScore = 0;
 
 function playGame(choice: string) {
-    if (typeof choice !== "string") {
-
+    const isCorrectInput = checkIsCorrectInput(choice)
+    if (!isCorrectInput){
+        displayMessage('Please type and enter "rock", "paper" or "scissors"')
+        return;
     }
+
+    const computerChoice = getComputerChoice()
+
+    displayMessage(`Computer chose ${computerChoice}`)
+
+    const isPlayerWinner = checkPlayerIsWinner(choice, computerChoice)
+    const isComputerWinner = checkComputerIsWinner(choice, computerChoice)
+
+    if(isPlayerWinner){
+        playerScore = incrementScore(playerScore)
+        displayMessage(`Player is the winner! The score is Player:${playerScore} and Computer:${computerScore}`)
+    }
+
+    if(isComputerWinner){
+        computerScore = incrementScore(computerScore)
+        displayMessage(`Computer is the winner! The score is Player:${playerScore} and Computer:${computerScore}`)
+    }
+
+    if(computerScore === 3 || playerScore === 3){
+        displayMessage(`${playerScore === 3 ? "Player" : "Computer"} is the champion!`)
+        computerScore = 0;
+        playerScore = 0;
+        return
+    }
+
+    else
+        displayMessage(`Draw!`)
 }
 
 function getComputerChoice(): string {
@@ -56,5 +85,9 @@ function checkIsCorrectInput(choice: string): boolean {
     if (typeof choice === "string" && (choice === "rock" || choice === "scissors" || choice === "paper"))
         return true
     else return false
+}
+
+function displayMessage(message:string){
+    console.log(message)
 }
 
