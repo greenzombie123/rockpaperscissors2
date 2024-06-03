@@ -72,3 +72,46 @@ function checkIsCorrectInput(choice) {
 function displayMessage(message) {
     console.log(message);
 }
+// UI Code
+var images = document.querySelectorAll('.topContainer img');
+images.forEach(function (image) { return image.addEventListener('click', playHand); });
+function playHand(event) {
+    var image = getImage(event);
+    console.log(image);
+    //playGame(hand)
+}
+function highlightImage(image, currentPlayer) {
+    if (typeof image === "string") {
+        image = getImage(image);
+    }
+    if (image.classList.contains("player") && currentPlayer === "computer") {
+        image.classList.replace("player", "both");
+    }
+    else if (!(image.classList.contains("player")) && currentPlayer === "computer") {
+        image.classList.add("computer");
+    }
+    else if (!(image.classList.contains("computer")) && currentPlayer === "player") {
+        image.classList.add("player");
+    }
+    // Add or change class of an image
+    // Give it computer, player, or both
+    // Get ref of image -> getImage
+    // Need to know who *person* and what *hand* they chose
+    // If image classList has no player && hand is computer
+    //      Add computer class to image
+    // If image classList has player && hand is computer
+    //      Add both class to image
+    // If image classList has no computer && hand is player
+    //      Add player class to image 
+    // If image classList has computer && had is player
+    //      Add both class to image
+}
+function getHand(event) {
+    return event.target.id;
+}
+function getImage(image) {
+    if (typeof image !== "string") {
+        return image.target;
+    }
+    return document.querySelector("#".concat(image));
+}

@@ -30,6 +30,19 @@ img{
     box-shadow: 6px 5px 3px 0px black;
 }
 
+.computer{
+    border: 5px solid red;
+}
+
+.player{
+    border: 5px solid yellow;
+}
+
+.both{
+    border: 5px solid yellow;
+    outline: 5px solid red;
+}
+
 .bottomContainer{
     display: flex;
     justify-content: space-around;
