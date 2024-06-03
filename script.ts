@@ -101,6 +101,7 @@ function playHand(event: Event) {
 
     const image = getImage(event)
     console.log(image)
+    highlightImage(image, "player")
     //playGame(hand)
 }
 

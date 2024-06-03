@@ -78,6 +78,7 @@ images.forEach(function (image) { return image.addEventListener('click', playHan
 function playHand(event) {
     var image = getImage(event);
     console.log(image);
+    highlightImage(image, "player");
     //playGame(hand)
 }
 function highlightImage(image, currentPlayer) {
