@@ -79,7 +79,12 @@ img{
 }
 
 .popUp{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     border: 1px solid black;
+    font-size: 40px;
     width: 500px;
     height: 100px;
 }

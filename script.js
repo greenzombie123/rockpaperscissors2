@@ -19,12 +19,14 @@ function playGame(choice) {
         displayMessage("Player is the winner! The score is Player:".concat(playerScore, " and Computer:").concat(computerScore));
         // UI Function
         incrementScoreBoard("player", playerScore);
+        showPopUp("Player Wins!");
     }
     if (isComputerWinner) {
         computerScore = incrementScore(computerScore);
         displayMessage("Computer is the winner! The score is Player:".concat(playerScore, " and Computer:").concat(computerScore));
         // UI Function
         incrementScoreBoard("computer", computerScore);
+        showPopUp("Computer Wins!");
     }
     if (computerScore === 3 || playerScore === 3) {
         displayMessage("".concat(playerScore === 3 ? "Player" : "Computer", " is the champion!"));
@@ -33,12 +35,15 @@ function playGame(choice) {
         // UI Function
         removeHighlight(true);
         resetScoreBoard();
+        showPopUp("".concat(playerScore === 3 ? "Player" : "Computer", " is the champion!"));
         return;
     }
     else
         displayMessage("Draw!");
     // UI Function
     removeHighlight(true);
+    if (choice === computerChoice)
+        showPopUp("Draw!");
 }
 function getComputerChoice() {
     var choices = ["rock", "paper", "scissors"];
@@ -86,6 +91,7 @@ function displayMessage(message) {
 // UI Code
 // Used for canceling previous setTimeOuts 
 var timeoutID;
+var popUpTimeOutId;
 var images = getAllImages();
 images.forEach(function (image) { return image.addEventListener('click', playHand); });
 function playHand(event) {
@@ -152,4 +158,13 @@ function resetScoreBoard() {
         var allStars = document.querySelectorAll(".star");
         allStars.forEach(function (star) { return star.classList.remove("black"); });
     }, 1000);
+}
+function showPopUp(message) {
+    clearTimeout(popUpTimeOutId);
+    var popUp = document.querySelector(".popUp");
+    popUp.textContent = "";
+    popUp.textContent = message;
+    popUpTimeOutId = setTimeout(function () {
+        popUp.textContent = "";
+    }, 2000);
 }

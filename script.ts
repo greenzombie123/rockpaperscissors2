@@ -26,6 +26,7 @@ function playGame(choice: string): void {
 
         // UI Function
         incrementScoreBoard("player", playerScore)
+        showPopUp("Player Wins!")
     }
 
     if (isComputerWinner) {
@@ -34,6 +35,7 @@ function playGame(choice: string): void {
 
         // UI Function
         incrementScoreBoard("computer", computerScore)
+        showPopUp("Computer Wins!")
     }
 
     if (computerScore === 3 || playerScore === 3) {
@@ -43,6 +45,7 @@ function playGame(choice: string): void {
         // UI Function
         removeHighlight(true)
         resetScoreBoard()
+        showPopUp(`${playerScore === 3 ? "Player" : "Computer"} is the champion!`)
         return
     }
 
@@ -50,6 +53,7 @@ function playGame(choice: string): void {
         displayMessage(`Draw!`)
     // UI Function
     removeHighlight(true)
+    if (choice === computerChoice) showPopUp("Draw!")
 }
 
 function getComputerChoice(): string {
@@ -109,6 +113,7 @@ function displayMessage(message: string) {
 
 // Used for canceling previous setTimeOuts 
 let timeoutID: number | undefined;
+let popUpTimeOutId: number | undefined;
 
 const images = getAllImages()
 
@@ -193,3 +198,13 @@ function resetScoreBoard() {
     }, 1000)
 }
 
+function showPopUp(message: string) {
+    clearTimeout(popUpTimeOutId)
+    const popUp = document.querySelector(".popUp")!
+    popUp.textContent = "";
+
+    popUp.textContent = message;
+    popUpTimeOutId = setTimeout(() => {
+        popUp.textContent = "";
+    }, 2000)
+}
