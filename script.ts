@@ -1,5 +1,3 @@
-let playerChoice: "rock" | "paper" | "scissors";
-let computerChoice: "rock" | "paper" | "scissors";
 let playerScore = 0;
 let computerScore = 0;
 let gameState: "newGame" | "gameOver" | "inPlay"

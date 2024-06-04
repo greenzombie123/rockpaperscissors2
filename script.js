@@ -1,5 +1,3 @@
-var playerChoice;
-var computerChoice;
 var playerScore = 0;
 var computerScore = 0;
 var gameState;
