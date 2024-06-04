@@ -9,6 +9,8 @@ function playGame(choice) {
         return;
     }
     var computerChoice = getComputerChoice();
+    // UI Function
+    highlightImage(computerChoice, "computer");
     displayMessage("Computer chose ".concat(computerChoice));
     var isPlayerWinner = checkPlayerIsWinner(choice, computerChoice);
     var isComputerWinner = checkComputerIsWinner(choice, computerChoice);
@@ -73,7 +75,7 @@ function displayMessage(message) {
     console.log(message);
 }
 // UI Code
-var images = document.querySelectorAll('.topContainer img');
+var images = getAllImages();
 images.forEach(function (image) { return image.addEventListener('click', playHand); });
 function playHand(event) {
     var image = getImage(event);
@@ -103,4 +105,9 @@ function getImage(image) {
         return image.target;
     }
     return document.querySelector("#".concat(image));
+}
+function removeHighlight() {
+}
+function getAllImages() {
+    return document.querySelectorAll('.topContainer img');
 }

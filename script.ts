@@ -12,6 +12,9 @@ function playGame(choice: string): void {
 
     const computerChoice = getComputerChoice()
 
+    // UI Function
+    highlightImage(computerChoice, "computer")
+
     displayMessage(`Computer chose ${computerChoice}`)
 
     const isPlayerWinner = checkPlayerIsWinner(choice, computerChoice)
@@ -93,7 +96,7 @@ function displayMessage(message: string) {
 
 // UI Code
 
-const images = document.querySelectorAll('.topContainer img')
+const images = getAllImages()
 
 images.forEach(image => image.addEventListener('click', playHand))
 
@@ -105,17 +108,17 @@ function playHand(event: Event) {
     playGame(hand)
 }
 
-function highlightImage(image:HTMLElement | string, currentPlayer:string) {
-    if(typeof image === "string"){
+function highlightImage(image: HTMLElement | string, currentPlayer: string) {
+    if (typeof image === "string") {
         image = getImage(image)
     }
-    if(image.classList.contains("player") && currentPlayer === "computer"){
+    if (image.classList.contains("player") && currentPlayer === "computer") {
         image.classList.replace("player", "both")
     }
-    else if(!(image.classList.contains("player")) && currentPlayer === "computer"){
+    else if (!(image.classList.contains("player")) && currentPlayer === "computer") {
         image.classList.add("computer")
     }
-    else if(!(image.classList.contains("computer")) && currentPlayer === "player"){
+    else if (!(image.classList.contains("computer")) && currentPlayer === "player") {
         image.classList.add("player")
     }
 }
@@ -125,11 +128,17 @@ function getChoice(event: Event): string {
 }
 
 function getImage(image: string | Event): HTMLElement {
-    if(typeof image !== "string"){
+    if (typeof image !== "string") {
         return image.target as HTMLElement
     }
-    
+
     return document.querySelector(`#${image}`)!
 }
 
-function 
+function removeHighlight() {
+
+}
+
+function getAllImages() {
+    return document.querySelectorAll('.topContainer img')
+}
