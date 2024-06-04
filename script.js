@@ -130,3 +130,8 @@ function removeHighlight(isTimed) {
 function getAllImages() {
     return document.querySelectorAll('.topContainer img');
 }
+function incrementScoreBoard(winner) {
+}
+function getStars(id) {
+    return document.querySelectorAll("#".concat(id, "ScoreBoard .score .star"));
+}

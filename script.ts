@@ -163,3 +163,12 @@ function removeHighlight(isTimed: boolean) {
 function getAllImages() {
     return document.querySelectorAll('.topContainer img')
 }
+
+function incrementScoreBoard(winner:string){
+
+}
+
+function getStars(id:string):NodeList{
+    return document.querySelectorAll(`#${id}ScoreBoard .score .star`)
+}
+
