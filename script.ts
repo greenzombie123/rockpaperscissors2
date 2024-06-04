@@ -100,9 +100,9 @@ images.forEach(image => image.addEventListener('click', playHand))
 function playHand(event: Event) {
 
     const image = getImage(event)
-    console.log(image)
+    const hand = getChoice(event)
     highlightImage(image, "player")
-    //playGame(hand)
+    playGame(hand)
 }
 
 function highlightImage(image:HTMLElement | string, currentPlayer:string) {
@@ -118,21 +118,9 @@ function highlightImage(image:HTMLElement | string, currentPlayer:string) {
     else if(!(image.classList.contains("computer")) && currentPlayer === "player"){
         image.classList.add("player")
     }
-    // Add or change class of an image
-    // Give it computer, player, or both
-    // Get ref of image -> getImage
-    // Need to know who *person* and what *hand* they chose
-    // If image classList has no player && hand is computer
-    //      Add computer class to image
-    // If image classList has player && hand is computer
-    //      Add both class to image
-    // If image classList has no computer && hand is player
-    //      Add player class to image 
-    // If image classList has computer && had is player
-    //      Add both class to image
 }
 
-function getHand(event: Event): string {
+function getChoice(event: Event): string {
     return (event.target as HTMLElement).id
 }
 
@@ -143,3 +131,5 @@ function getImage(image: string | Event): HTMLElement {
     
     return document.querySelector(`#${image}`)!
 }
+
+function 
