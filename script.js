@@ -27,13 +27,13 @@ function playGame(choice) {
         computerScore = 0;
         playerScore = 0;
         // UI Function
-        removeHighlight();
+        removeHighlight(true);
         return;
     }
     else
         displayMessage("Draw!");
     // UI Function
-    removeHighlight();
+    removeHighlight(true);
 }
 function getComputerChoice() {
     var choices = ["rock", "paper", "scissors"];
@@ -84,9 +84,10 @@ var timeoutID;
 var images = getAllImages();
 images.forEach(function (image) { return image.addEventListener('click', playHand); });
 function playHand(event) {
+    removeHighlight(false);
     var image = getImage(event);
-    var hand = getChoice(event);
     highlightImage(image, "player");
+    var hand = getChoice(event);
     playGame(hand);
 }
 function highlightImage(image, currentPlayer) {
@@ -112,12 +113,19 @@ function getImage(image) {
     }
     return document.querySelector("#".concat(image));
 }
-function removeHighlight() {
-    timeoutID = setTimeout(function () {
+function removeHighlight(isTimed) {
+    if (isTimed) {
+        timeoutID = setTimeout(function () {
+            clearTimeout(timeoutID);
+            var images = getAllImages();
+            images.forEach(function (image) { return image.classList.remove("computer", "player", "both"); });
+        }, 2000);
+    }
+    else {
         clearTimeout(timeoutID);
-        var images = getAllImages();
-        images.forEach(function (image) { return image.classList.remove("computer", "player", "both"); });
-    }, 2000);
+        var images_1 = getAllImages();
+        images_1.forEach(function (image) { return image.classList.remove("computer", "player", "both"); });
+    }
 }
 function getAllImages() {
     return document.querySelectorAll('.topContainer img');

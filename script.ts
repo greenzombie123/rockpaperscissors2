@@ -35,14 +35,14 @@ function playGame(choice: string): void {
         computerScore = 0;
         playerScore = 0;
         // UI Function
-        removeHighlight()
+        removeHighlight(true)
         return
     }
 
     else
         displayMessage(`Draw!`)
     // UI Function
-    removeHighlight()
+    removeHighlight(true)
 }
 
 function getComputerChoice(): string {
@@ -101,7 +101,7 @@ function displayMessage(message: string) {
 // UI Code
 
 // Used for canceling previous setTimeOuts 
-let timeoutID:number | undefined;
+let timeoutID: number | undefined;
 
 const images = getAllImages()
 
@@ -109,9 +109,12 @@ images.forEach(image => image.addEventListener('click', playHand))
 
 function playHand(event: Event) {
 
+    removeHighlight(false)
+
     const image = getImage(event)
-    const hand = getChoice(event)
     highlightImage(image, "player")
+
+    const hand = getChoice(event)
     playGame(hand)
 }
 
@@ -142,12 +145,19 @@ function getImage(image: string | Event): HTMLElement {
     return document.querySelector(`#${image}`)!
 }
 
-function removeHighlight() {
-    timeoutID = setTimeout(() => {
+function removeHighlight(isTimed: boolean) {
+    if (isTimed) {
+        timeoutID = setTimeout(() => {
+            clearTimeout(timeoutID)
+            const images = getAllImages()
+            images.forEach(image => image.classList.remove("computer", "player", "both"))
+        }, 2000)
+    }
+    else {
         clearTimeout(timeoutID)
         const images = getAllImages()
         images.forEach(image => image.classList.remove("computer", "player", "both"))
-    }, 2000)
+    }
 }
 
 function getAllImages() {
