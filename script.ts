@@ -23,11 +23,17 @@ function playGame(choice: string): void {
     if (isPlayerWinner) {
         playerScore = incrementScore(playerScore)
         displayMessage(`Player is the winner! The score is Player:${playerScore} and Computer:${computerScore}`)
+        
+        // UI Function
+        incrementScoreBoard("player", playerScore)
     }
 
     if (isComputerWinner) {
         computerScore = incrementScore(computerScore)
         displayMessage(`Computer is the winner! The score is Player:${playerScore} and Computer:${computerScore}`)
+        
+        // UI Function
+        incrementScoreBoard("computer", computerScore)
     }
 
     if (computerScore === 3 || playerScore === 3) {
@@ -164,11 +170,23 @@ function getAllImages() {
     return document.querySelectorAll('.topContainer img')
 }
 
-function incrementScoreBoard(winner:string){
-
+function incrementScoreBoard(winner: string, points:number) {
+    let stars = getStars(winner)
+    for (let index = 0; index < points; index++) {
+        
+        // Type cast the object inside stars[index] to a HTMLElement so you can access the style property
+        const star = stars[index] as HTMLElement
+        star.classList.add("black")
+    }
 }
 
-function getStars(id:string):NodeList{
-    return document.querySelectorAll(`#${id}ScoreBoard .score .star`)
+function getStars(id: string): Node[] {
+    let stars: NodeList | Node[] = document.querySelectorAll(`#${id}ScoreBoard .score .star`)
+    return Array.from(stars)
+}
+
+function resetScoreBoard(){
+    let allStars:NodeList|Node[] = document.querySelectorAll(`.stars`)
+    allStars.forEach(star=> (star as HTMLElement).classList.remove("black"))
 }
 

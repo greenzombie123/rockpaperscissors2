@@ -17,10 +17,14 @@ function playGame(choice) {
     if (isPlayerWinner) {
         playerScore = incrementScore(playerScore);
         displayMessage("Player is the winner! The score is Player:".concat(playerScore, " and Computer:").concat(computerScore));
+        // UI Function
+        incrementScoreBoard("player", playerScore);
     }
     if (isComputerWinner) {
         computerScore = incrementScore(computerScore);
         displayMessage("Computer is the winner! The score is Player:".concat(playerScore, " and Computer:").concat(computerScore));
+        // UI Function
+        incrementScoreBoard("computer", computerScore);
     }
     if (computerScore === 3 || playerScore === 3) {
         displayMessage("".concat(playerScore === 3 ? "Player" : "Computer", " is the champion!"));
@@ -130,8 +134,19 @@ function removeHighlight(isTimed) {
 function getAllImages() {
     return document.querySelectorAll('.topContainer img');
 }
-function incrementScoreBoard(winner) {
+function incrementScoreBoard(winner, points) {
+    var stars = getStars(winner);
+    for (var index = 0; index < points; index++) {
+        // Type cast the object inside stars[index] to a HTMLElement so you can access the style property
+        var star = stars[index];
+        star.classList.add("black");
+    }
 }
 function getStars(id) {
-    return document.querySelectorAll("#".concat(id, "ScoreBoard .score .star"));
+    var stars = document.querySelectorAll("#".concat(id, "ScoreBoard .score .star"));
+    return Array.from(stars);
+}
+function resetScoreBoard() {
+    var allStars = document.querySelectorAll(".stars");
+    allStars.forEach(function (star) { return star.classList.remove("black"); });
 }
