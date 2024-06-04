@@ -32,6 +32,7 @@ function playGame(choice) {
         playerScore = 0;
         // UI Function
         removeHighlight(true);
+        resetScoreBoard();
         return;
     }
     else
@@ -147,6 +148,8 @@ function getStars(id) {
     return Array.from(stars);
 }
 function resetScoreBoard() {
-    var allStars = document.querySelectorAll(".stars");
-    allStars.forEach(function (star) { return star.classList.remove("black"); });
+    setTimeout(function () {
+        var allStars = document.querySelectorAll(".star");
+        allStars.forEach(function (star) { return star.classList.remove("black"); });
+    }, 1000);
 }

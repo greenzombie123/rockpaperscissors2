@@ -23,7 +23,7 @@ function playGame(choice: string): void {
     if (isPlayerWinner) {
         playerScore = incrementScore(playerScore)
         displayMessage(`Player is the winner! The score is Player:${playerScore} and Computer:${computerScore}`)
-        
+
         // UI Function
         incrementScoreBoard("player", playerScore)
     }
@@ -31,7 +31,7 @@ function playGame(choice: string): void {
     if (isComputerWinner) {
         computerScore = incrementScore(computerScore)
         displayMessage(`Computer is the winner! The score is Player:${playerScore} and Computer:${computerScore}`)
-        
+
         // UI Function
         incrementScoreBoard("computer", computerScore)
     }
@@ -42,6 +42,7 @@ function playGame(choice: string): void {
         playerScore = 0;
         // UI Function
         removeHighlight(true)
+        resetScoreBoard()
         return
     }
 
@@ -170,10 +171,10 @@ function getAllImages() {
     return document.querySelectorAll('.topContainer img')
 }
 
-function incrementScoreBoard(winner: string, points:number) {
+function incrementScoreBoard(winner: string, points: number) {
     let stars = getStars(winner)
     for (let index = 0; index < points; index++) {
-        
+
         // Type cast the object inside stars[index] to a HTMLElement so you can access the style property
         const star = stars[index] as HTMLElement
         star.classList.add("black")
@@ -185,8 +186,10 @@ function getStars(id: string): Node[] {
     return Array.from(stars)
 }
 
-function resetScoreBoard(){
-    let allStars:NodeList|Node[] = document.querySelectorAll(`.stars`)
-    allStars.forEach(star=> (star as HTMLElement).classList.remove("black"))
+function resetScoreBoard() {
+    setTimeout(() => {
+        let allStars: NodeList | Node[] = document.querySelectorAll(`.star`)
+        allStars.forEach(star => (star as HTMLElement).classList.remove("black"))
+    }, 1000)
 }
 
