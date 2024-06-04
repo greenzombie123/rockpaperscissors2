@@ -26,10 +26,14 @@ function playGame(choice) {
         displayMessage("".concat(playerScore === 3 ? "Player" : "Computer", " is the champion!"));
         computerScore = 0;
         playerScore = 0;
+        // UI Function
+        removeHighlight();
         return;
     }
     else
         displayMessage("Draw!");
+    // UI Function
+    removeHighlight();
 }
 function getComputerChoice() {
     var choices = ["rock", "paper", "scissors"];
@@ -75,6 +79,8 @@ function displayMessage(message) {
     console.log(message);
 }
 // UI Code
+// Used for canceling previous setTimeOuts 
+var timeoutID;
 var images = getAllImages();
 images.forEach(function (image) { return image.addEventListener('click', playHand); });
 function playHand(event) {
@@ -107,8 +113,11 @@ function getImage(image) {
     return document.querySelector("#".concat(image));
 }
 function removeHighlight() {
-    var images = getAllImages();
-    images.forEach(function (image) { return image.classList.remove("computer", "player", "both"); });
+    timeoutID = setTimeout(function () {
+        clearTimeout(timeoutID);
+        var images = getAllImages();
+        images.forEach(function (image) { return image.classList.remove("computer", "player", "both"); });
+    }, 2000);
 }
 function getAllImages() {
     return document.querySelectorAll('.topContainer img');

@@ -34,11 +34,15 @@ function playGame(choice: string): void {
         displayMessage(`${playerScore === 3 ? "Player" : "Computer"} is the champion!`)
         computerScore = 0;
         playerScore = 0;
+        // UI Function
+        removeHighlight()
         return
     }
 
     else
         displayMessage(`Draw!`)
+    // UI Function
+    removeHighlight()
 }
 
 function getComputerChoice(): string {
@@ -95,6 +99,10 @@ function displayMessage(message: string) {
 }
 
 // UI Code
+
+// Used for canceling previous setTimeOuts 
+let timeoutID:number | undefined;
+
 const images = getAllImages()
 
 images.forEach(image => image.addEventListener('click', playHand))
@@ -135,11 +143,13 @@ function getImage(image: string | Event): HTMLElement {
 }
 
 function removeHighlight() {
-    const images = getAllImages()
-    images.forEach(image => image.classList.remove("computer", "player", "both"))
+    timeoutID = setTimeout(() => {
+        clearTimeout(timeoutID)
+        const images = getAllImages()
+        images.forEach(image => image.classList.remove("computer", "player", "both"))
+    }, 2000)
 }
 
 function getAllImages() {
     return document.querySelectorAll('.topContainer img')
 }
-
