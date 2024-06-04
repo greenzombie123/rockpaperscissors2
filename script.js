@@ -4,11 +4,6 @@ var gameState;
 function playGame(choice) {
     //UI Function
     resetScoreBoard(gameState);
-    var isCorrectInput = checkIsCorrectInput(choice);
-    if (!isCorrectInput) {
-        displayMessage('Please type and enter "rock", "paper" or "scissors"');
-        return;
-    }
     var computerChoice = getComputerChoice();
     // This function belongs to the UI 
     highlightImage(computerChoice, "computer");
@@ -81,12 +76,6 @@ function checkComputerIsWinner(playerChoice, computerChoice) {
 }
 function incrementScore(score) {
     return ++score;
-}
-function checkIsCorrectInput(choice) {
-    if (typeof choice === "string" && (choice === "rock" || choice === "scissors" || choice === "paper"))
-        return true;
-    else
-        return false;
 }
 function displayMessage(message) {
     console.log(message);

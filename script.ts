@@ -6,12 +6,6 @@ function playGame(choice: string): void {
     //UI Function
     resetScoreBoard(gameState)
 
-    const isCorrectInput = checkIsCorrectInput(choice)
-    if (!isCorrectInput) {
-        displayMessage('Please type and enter "rock", "paper" or "scissors"')
-        return;
-    }
-
     const computerChoice = getComputerChoice()
 
     // This function belongs to the UI 
@@ -106,11 +100,6 @@ function incrementScore(score: number): number {
     return ++score
 }
 
-function checkIsCorrectInput(choice: string): boolean {
-    if (typeof choice === "string" && (choice === "rock" || choice === "scissors" || choice === "paper"))
-        return true
-    else return false
-}
 
 function displayMessage(message: string) {
     console.log(message)
