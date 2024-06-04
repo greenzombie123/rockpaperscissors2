@@ -12,7 +12,7 @@ function playGame(choice: string): void {
 
     const computerChoice = getComputerChoice()
 
-    // UI Function
+    // This function belongs to the UI 
     highlightImage(computerChoice, "computer")
 
     displayMessage(`Computer chose ${computerChoice}`)
@@ -95,7 +95,6 @@ function displayMessage(message: string) {
 }
 
 // UI Code
-
 const images = getAllImages()
 
 images.forEach(image => image.addEventListener('click', playHand))
@@ -136,9 +135,11 @@ function getImage(image: string | Event): HTMLElement {
 }
 
 function removeHighlight() {
-
+    const images = getAllImages()
+    images.forEach(image => image.classList.remove("computer", "player", "both"))
 }
 
 function getAllImages() {
     return document.querySelectorAll('.topContainer img')
 }
+

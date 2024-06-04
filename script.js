@@ -9,7 +9,7 @@ function playGame(choice) {
         return;
     }
     var computerChoice = getComputerChoice();
-    // UI Function
+    // This function belongs to the UI 
     highlightImage(computerChoice, "computer");
     displayMessage("Computer chose ".concat(computerChoice));
     var isPlayerWinner = checkPlayerIsWinner(choice, computerChoice);
@@ -107,6 +107,8 @@ function getImage(image) {
     return document.querySelector("#".concat(image));
 }
 function removeHighlight() {
+    var images = getAllImages();
+    images.forEach(function (image) { return image.classList.remove("computer", "player", "both"); });
 }
 function getAllImages() {
     return document.querySelectorAll('.topContainer img');
