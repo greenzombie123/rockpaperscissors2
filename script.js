@@ -2,7 +2,10 @@ var playerChoice;
 var computerChoice;
 var playerScore = 0;
 var computerScore = 0;
+var gameState;
 function playGame(choice) {
+    //UI Function
+    resetScoreBoard(gameState);
     var isCorrectInput = checkIsCorrectInput(choice);
     if (!isCorrectInput) {
         displayMessage('Please type and enter "rock", "paper" or "scissors"');
@@ -30,12 +33,14 @@ function playGame(choice) {
     }
     if (computerScore === 3 || playerScore === 3) {
         displayMessage("".concat(playerScore === 3 ? "Player" : "Computer", " is the champion!"));
+        // UI Function
+        showPopUp("".concat(playerScore === 3 ? "Player" : "Computer", " is the champion!"));
         computerScore = 0;
         playerScore = 0;
         // UI Function
         removeHighlight(true);
-        resetScoreBoard();
-        showPopUp("".concat(playerScore === 3 ? "Player" : "Computer", " is the champion!"));
+        changeGameState("gameOver");
+        resetScoreBoard(gameState);
         return;
     }
     else
@@ -92,6 +97,8 @@ function displayMessage(message) {
 // Used for canceling previous setTimeOuts 
 var timeoutID;
 var popUpTimeOutId;
+var resetScoreTimeOutId;
+// let scoreBoardData:
 var images = getAllImages();
 images.forEach(function (image) { return image.addEventListener('click', playHand); });
 function playHand(event) {
@@ -130,7 +137,7 @@ function removeHighlight(isTimed) {
             clearTimeout(timeoutID);
             var images = getAllImages();
             images.forEach(function (image) { return image.classList.remove("computer", "player", "both"); });
-        }, 2000);
+        }, 3000);
     }
     else {
         clearTimeout(timeoutID);
@@ -153,11 +160,20 @@ function getStars(id) {
     var stars = document.querySelectorAll("#".concat(id, "ScoreBoard .score .star"));
     return Array.from(stars);
 }
-function resetScoreBoard() {
-    setTimeout(function () {
+function resetScoreBoard(gameState) {
+    if (gameState === "gameOver") {
+        changeGameState("newGame");
+        resetScoreTimeOutId = setTimeout(function () {
+            var allStars = document.querySelectorAll(".star");
+            allStars.forEach(function (star) { return star.classList.remove("black"); });
+        }, 1000);
+    }
+    if (gameState === "newGame") {
+        clearTimeout(resetScoreTimeOutId);
         var allStars = document.querySelectorAll(".star");
         allStars.forEach(function (star) { return star.classList.remove("black"); });
-    }, 1000);
+        changeGameState("inPlay");
+    }
 }
 function showPopUp(message) {
     clearTimeout(popUpTimeOutId);
@@ -166,5 +182,8 @@ function showPopUp(message) {
     popUp.textContent = message;
     popUpTimeOutId = setTimeout(function () {
         popUp.textContent = "";
-    }, 2000);
+    }, 3000);
+}
+function changeGameState(newGameState) {
+    gameState = newGameState;
 }

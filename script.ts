@@ -2,8 +2,12 @@ let playerChoice: "rock" | "paper" | "scissors";
 let computerChoice: "rock" | "paper" | "scissors";
 let playerScore = 0;
 let computerScore = 0;
+let gameState: "newGame" | "gameOver" | "inPlay"
 
 function playGame(choice: string): void {
+    //UI Function
+    resetScoreBoard(gameState)
+
     const isCorrectInput = checkIsCorrectInput(choice)
     if (!isCorrectInput) {
         displayMessage('Please type and enter "rock", "paper" or "scissors"')
@@ -40,12 +44,17 @@ function playGame(choice: string): void {
 
     if (computerScore === 3 || playerScore === 3) {
         displayMessage(`${playerScore === 3 ? "Player" : "Computer"} is the champion!`)
+
+        // UI Function
+        showPopUp(`${playerScore === 3 ? "Player" : "Computer"} is the champion!`)
+
         computerScore = 0;
         playerScore = 0;
+
         // UI Function
         removeHighlight(true)
-        resetScoreBoard()
-        showPopUp(`${playerScore === 3 ? "Player" : "Computer"} is the champion!`)
+        changeGameState("gameOver")
+        resetScoreBoard(gameState)
         return
     }
 
@@ -114,6 +123,8 @@ function displayMessage(message: string) {
 // Used for canceling previous setTimeOuts 
 let timeoutID: number | undefined;
 let popUpTimeOutId: number | undefined;
+let resetScoreTimeOutId: number | undefined;
+// let scoreBoardData:
 
 const images = getAllImages()
 
@@ -163,7 +174,7 @@ function removeHighlight(isTimed: boolean) {
             clearTimeout(timeoutID)
             const images = getAllImages()
             images.forEach(image => image.classList.remove("computer", "player", "both"))
-        }, 2000)
+        }, 3000)
     }
     else {
         clearTimeout(timeoutID)
@@ -191,11 +202,20 @@ function getStars(id: string): Node[] {
     return Array.from(stars)
 }
 
-function resetScoreBoard() {
-    setTimeout(() => {
+function resetScoreBoard(gameState: "newGame" | "gameOver" | "inPlay") {
+    if (gameState === "gameOver") {
+        changeGameState("newGame")
+        resetScoreTimeOutId = setTimeout(() => {
+            let allStars: NodeList | Node[] = document.querySelectorAll(`.star`)
+            allStars.forEach(star => (star as HTMLElement).classList.remove("black"))
+        }, 1000)
+    }
+    if (gameState === "newGame") {
+        clearTimeout(resetScoreTimeOutId)
         let allStars: NodeList | Node[] = document.querySelectorAll(`.star`)
         allStars.forEach(star => (star as HTMLElement).classList.remove("black"))
-    }, 1000)
+        changeGameState("inPlay")
+    }
 }
 
 function showPopUp(message: string) {
@@ -206,5 +226,9 @@ function showPopUp(message: string) {
     popUp.textContent = message;
     popUpTimeOutId = setTimeout(() => {
         popUp.textContent = "";
-    }, 2000)
+    }, 3000)
+}
+
+function changeGameState(newGameState: "newGame" | "gameOver" | "inPlay") {
+    gameState = newGameState
 }
