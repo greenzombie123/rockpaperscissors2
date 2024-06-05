@@ -1,10 +1,12 @@
 let playerScore = 0;
 let computerScore = 0;
-let gameState: "newGame" | "gameOver" | "inPlay"
 
 function playGame(choice: string): void {
+
     //UI Function
-    resetScoreBoard(gameState)
+    if (isResetScoreBoardTimerOn) {
+        resetScoreBoard()
+    }
 
     const computerChoice = getComputerChoice()
 
@@ -45,8 +47,7 @@ function playGame(choice: string): void {
 
         // UI Function
         removeHighlight(true)
-        changeGameState("gameOver")
-        resetScoreBoard(gameState)
+        resetScoreBoard()
         return
     }
 
@@ -110,7 +111,7 @@ function displayMessage(message: string) {
 // Used for canceling previous setTimeOuts 
 let timeoutID: number | undefined;
 let popUpTimeOutId: number | undefined;
-let resetScoreTimeOutId: number | undefined;
+let isResetScoreBoardTimerOn: number | null = null;
 // let scoreBoardData:
 
 const images = getAllImages()
@@ -189,19 +190,18 @@ function getStars(id: string): Node[] {
     return Array.from(stars)
 }
 
-function resetScoreBoard(gameState: "newGame" | "gameOver" | "inPlay") {
-    if (gameState === "gameOver") {
-        changeGameState("newGame")
-        resetScoreTimeOutId = setTimeout(() => {
+function resetScoreBoard() {
+    if (!isResetScoreBoardTimerOn) {
+        isResetScoreBoardTimerOn = setTimeout(() => {
             let allStars: NodeList | Node[] = document.querySelectorAll(`.star`)
             allStars.forEach(star => (star as HTMLElement).classList.remove("black"))
         }, 1000)
     }
-    if (gameState === "newGame") {
-        clearTimeout(resetScoreTimeOutId)
+    else if (isResetScoreBoardTimerOn) {
+        clearTimeout(isResetScoreBoardTimerOn)
+        isResetScoreBoardTimerOn = null;
         let allStars: NodeList | Node[] = document.querySelectorAll(`.star`)
         allStars.forEach(star => (star as HTMLElement).classList.remove("black"))
-        changeGameState("inPlay")
     }
 }
 
@@ -214,8 +214,4 @@ function showPopUp(message: string) {
     popUpTimeOutId = setTimeout(() => {
         popUp.textContent = "";
     }, 3000)
-}
-
-function changeGameState(newGameState: "newGame" | "gameOver" | "inPlay") {
-    gameState = newGameState
 }

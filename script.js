@@ -1,9 +1,10 @@
 var playerScore = 0;
 var computerScore = 0;
-var gameState;
 function playGame(choice) {
     //UI Function
-    resetScoreBoard(gameState);
+    if (isResetScoreBoardTimerOn) {
+        resetScoreBoard();
+    }
     var computerChoice = getComputerChoice();
     // This function belongs to the UI 
     highlightImage(computerChoice, "computer");
@@ -32,8 +33,7 @@ function playGame(choice) {
         playerScore = 0;
         // UI Function
         removeHighlight(true);
-        changeGameState("gameOver");
-        resetScoreBoard(gameState);
+        resetScoreBoard();
         return;
     }
     else
@@ -84,7 +84,7 @@ function displayMessage(message) {
 // Used for canceling previous setTimeOuts 
 var timeoutID;
 var popUpTimeOutId;
-var resetScoreTimeOutId;
+var isResetScoreBoardTimerOn = null;
 // let scoreBoardData:
 var images = getAllImages();
 images.forEach(function (image) { return image.addEventListener('click', playHand); });
@@ -147,19 +147,18 @@ function getStars(id) {
     var stars = document.querySelectorAll("#".concat(id, "ScoreBoard .score .star"));
     return Array.from(stars);
 }
-function resetScoreBoard(gameState) {
-    if (gameState === "gameOver") {
-        changeGameState("newGame");
-        resetScoreTimeOutId = setTimeout(function () {
+function resetScoreBoard() {
+    if (!isResetScoreBoardTimerOn) {
+        isResetScoreBoardTimerOn = setTimeout(function () {
             var allStars = document.querySelectorAll(".star");
             allStars.forEach(function (star) { return star.classList.remove("black"); });
         }, 1000);
     }
-    if (gameState === "newGame") {
-        clearTimeout(resetScoreTimeOutId);
+    else if (isResetScoreBoardTimerOn) {
+        clearTimeout(isResetScoreBoardTimerOn);
+        isResetScoreBoardTimerOn = null;
         var allStars = document.querySelectorAll(".star");
         allStars.forEach(function (star) { return star.classList.remove("black"); });
-        changeGameState("inPlay");
     }
 }
 function showPopUp(message) {
@@ -170,7 +169,4 @@ function showPopUp(message) {
     popUpTimeOutId = setTimeout(function () {
         popUp.textContent = "";
     }, 3000);
-}
-function changeGameState(newGameState) {
-    gameState = newGameState;
 }
